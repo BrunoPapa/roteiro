@@ -64,13 +64,13 @@ function ListLayout({
                     {item[column.field]}
                   </td>
                 ))}
-                {title === 'Timelines' && (
+                {(title === 'Timelines' || title === 'Scripts') && (
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       onClick={() => onViewEvents?.(item)}
                       className="text-blue-600 hover:text-blue-900 font-medium"
                     >
-                      Timeline
+                      {title === 'Scripts' ? 'Script' : 'Timeline'}
                     </button>
                   </td>
                 )}

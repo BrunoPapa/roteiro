@@ -17,6 +17,7 @@ import ScriptForm from './ScriptForm';
 import ListLayout from './ListLayout';
 import DeleteConfirmation from './DeleteConfirmation';
 import TimelineEvents from './TimelineEvents';
+import ScriptWriting from './ScriptWriting';
 
 const menuItems = [
   { name: 'Dashboard', icon: ChartBarIcon },
@@ -36,6 +37,7 @@ function ProjectManagement() {
   const [editItem, setEditItem] = useState(null);
   const [deleteModal, setDeleteModal] = useState({ show: false, item: null, type: null });
   const [selectedTimeline, setSelectedTimeline] = useState(null);
+  const [selectedScript, setSelectedScript] = useState(null);
   
   const project = getProjectById(id);
 
@@ -111,11 +113,25 @@ function ProjectManagement() {
     setSelectedTimeline(timeline);
   };
 
+  const handleViewScript = (script) => {
+    setSelectedScript(script);
+  };
+
   const handleUpdateTimeline = (updatedTimeline) => {
     const updatedProject = {
       ...project,
       timelines: project.timelines.map(t =>
         t.id === updatedTimeline.id ? updatedTimeline : t
+      )
+    };
+    updateProject(updatedProject);
+  };
+
+  const handleUpdateScript = (updatedScript) => {
+    const updatedProject = {
+      ...project,
+      scripts: project.scripts.map(s =>
+        s.id === updatedScript.id ? updatedScript : s
       )
     };
     updateProject(updatedProject);
@@ -128,6 +144,16 @@ function ProjectManagement() {
           timeline={selectedTimeline}
           onClose={() => setSelectedTimeline(null)}
           onUpdate={handleUpdateTimeline}
+        />
+      );
+    }
+
+    if (selectedScript) {
+      return (
+        <ScriptWriting
+          script={selectedScript}
+          onBack={() => setSelectedScript(null)}
+          onUpdate={handleUpdateScript}
         />
       );
     }
@@ -191,7 +217,11 @@ function ProjectManagement() {
         onEdit={(item) => setEditItem(item)}
         onDelete={(item) => handleDelete(item, activeSection.slice(0, -1))}
         title={activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
-        onViewEvents={activeSection === 'timelines' ? handleViewEvents : undefined}
+        onViewEvents={
+          activeSection === 'timelines' ? handleViewEvents :
+          activeSection === 'scripts' ? handleViewScript :
+          undefined
+        }
       />
     );
   };

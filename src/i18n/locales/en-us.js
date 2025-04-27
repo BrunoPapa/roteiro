@@ -11,6 +11,8 @@ export default {
     actions: 'Actions',
     backToProjects: 'Back to Projects',
     dashboard: 'Dashboard',
+    script: 'Script',
+    writeScript: 'Write Script',
     fontSize: {
       small: 'Small',
       medium: 'Medium',
