@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 
-function ScriptEventForm({ event, onSave, onCancel }) {
+function ScriptEventForm({ event, onSave, onCancel, project }) {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
   
@@ -12,6 +12,9 @@ function ScriptEventForm({ event, onSave, onCancel }) {
     description: '',
     associatedEvents: []
   });
+  
+  const [selectedTimeline, setSelectedTimeline] = useState('');
+  const timelineOptions = project?.timelines || [];
 
   useEffect(() => {
     if (event) {
@@ -24,12 +27,18 @@ function ScriptEventForm({ event, onSave, onCancel }) {
     onSave(formData);
   };
 
+  // Get events from selected timeline
+  const getTimelineEvents = () => {
+    const timeline = timelineOptions.find(t => t.id === selectedTimeline);
+    return timeline?.events || [];
+  };
+
   const handleAddAssociatedEvent = () => {
     setFormData({
       ...formData,
       associatedEvents: [
         ...formData.associatedEvents,
-        { id: Date.now(), type: 'direct', eventId: '' }
+        { id: Date.now(), type: 'direct', timelineId: '', eventId: '' }
       ]
     });
   };
@@ -99,13 +108,34 @@ function ScriptEventForm({ event, onSave, onCancel }) {
               <option value="indirect">Indirect</option>
               <option value="hidden">Hidden</option>
             </select>
-            <input
-              type="text"
+            <select
+              value={assocEvent.timelineId}
+              onChange={(e) => {
+                handleAssociatedEventChange(index, 'timelineId', e.target.value);
+                handleAssociatedEventChange(index, 'eventId', '');
+              }}
+              className={selectClassName}
+            >
+              <option value="">Select Timeline</option>
+              {timelineOptions.map(timeline => (
+                <option key={timeline.id} value={timeline.id}>
+                  {timeline.name}
+                </option>
+              ))}
+            </select>
+            <select
               value={assocEvent.eventId}
               onChange={(e) => handleAssociatedEventChange(index, 'eventId', e.target.value)}
-              placeholder="Event ID"
-              className={inputClassName}
-            />
+              className={selectClassName}
+              disabled={!assocEvent.timelineId}
+            >
+              <option value="">Select Event</option>
+              {assocEvent.timelineId && getTimelineEvents().map(event => (
+                <option key={event.id} value={event.id}>
+                  {event.title}
+                </option>
+              ))}
+            </select>
             <button
               type="button"
               onClick={() => handleRemoveAssociatedEvent(index)}

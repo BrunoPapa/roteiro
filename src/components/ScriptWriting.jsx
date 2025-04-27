@@ -6,7 +6,7 @@ import { PlusIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
 import ScriptEventForm from './ScriptEventForm';
 import DeleteConfirmation from './DeleteConfirmation';
 
-function ScriptWriting({ script, onBack }) {
+function ScriptWriting({ script, onBack, project }) {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
   const [events, setEvents] = useState([]);
@@ -179,6 +179,7 @@ function ScriptWriting({ script, onBack }) {
           <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
             <ScriptEventForm
               event={editEvent}
+              project={project}
               onSave={handleSaveEvent}
               onCancel={() => {
                 setShowEventForm(false);

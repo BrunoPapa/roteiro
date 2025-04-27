@@ -152,6 +152,7 @@ function ProjectManagement() {
       return (
         <ScriptWriting
           script={selectedScript}
+          project={project}
           onBack={() => setSelectedScript(null)}
           onUpdate={handleUpdateScript}
         />
