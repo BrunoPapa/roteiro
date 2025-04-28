@@ -23,3 +23,56 @@
 ::-webkit-scrollbar-corner {
   display: none;
 }
+
+/* React Quill Dark Theme */
+.dark-theme-editor .ql-toolbar {
+  background-color: #374151 !important;
+  border-color: #4B5563 !important;
+}
+
+.dark-theme-editor .ql-container {
+  background-color: #1F2937 !important;
+  border-color: #4B5563 !important;
+  color: #E5E7EB !important;
+}
+
+.dark-theme-editor .ql-picker {
+  color: #E5E7EB !important;
+}
+
+.dark-theme-editor .ql-stroke {
+  stroke: #E5E7EB !important;
+}
+
+.dark-theme-editor .ql-fill {
+  fill: #E5E7EB !important;
+}
+
+.dark-theme-editor .ql-picker-options {
+  background-color: #374151 !important;
+  border-color: #4B5563 !important;
+}
+
+.dark-theme-editor .ql-picker-item {
+  color: #E5E7EB !important;
+}
+
+.dark-theme-editor .ql-editor.ql-blank::before {
+  color: #9CA3AF !important;
+}
+
+/* Quill Editor Base Styles */
+.ql-container {
+  min-height: 150px;
+  border-bottom-left-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+}
+
+.ql-toolbar {
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+}
+
+.ql-editor {
+  min-height: 150px;
+}

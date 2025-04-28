@@ -3,10 +3,28 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useProjects } from '../context/ProjectContext';
 import { useParams } from 'react-router-dom';
-import { Editor } from '@tinymce/tinymce-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const relationshipTypes = ['Sequencial', 'Direto', 'Indireto', 'Oculto'];
 const characterActions = ['No Evento', 'Citado'];
+
+const modules = {
+  toolbar: [
+    [{ 'header': [1, 2, false] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+    ['link'],
+    ['clean']
+  ],
+};
+
+const formats = [
+  'header',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link'
+];
 
 function EventForm({ event, time, onSave, onCancel, existingEvents }) {
   const { isDarkMode } = useTheme();
@@ -112,25 +130,16 @@ function EventForm({ event, time, onSave, onCancel, existingEvents }) {
 
       <div>
         <label className="block mb-2">Roteiro *</label>
-        <Editor
-          apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-          init={{
-            height: 300,
-            menubar: true,
-            plugins: [
-              'advlist autolink lists link image charmap print preview anchor',
-              'searchreplace visualblocks code fullscreen',
-              'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | \
-              alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | help',
-            skin: isDarkMode ? 'oxide-dark' : 'oxide',
-            content_css: isDarkMode ? 'dark' : 'default'
-          }}
-          value={formData.script}
-          onEditorChange={(content) => setFormData(prev => ({ ...prev, script: content }))}
-        />
+        <div className={isDarkMode ? 'dark-theme-editor' : ''}>
+          <ReactQuill
+            theme="snow"
+            value={formData.script}
+            onChange={(content) => setFormData(prev => ({ ...prev, script: content }))}
+            modules={modules}
+            formats={formats}
+            className={`bg-${isDarkMode ? 'gray-800' : 'white'} rounded`}
+          />
+        </div>
       </div>
 
       <div>

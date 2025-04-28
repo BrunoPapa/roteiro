@@ -2,7 +2,25 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import { Editor } from '@tinymce/tinymce-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+const modules = {
+  toolbar: [
+    [{ 'header': [1, 2, false] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+    ['link'],
+    ['clean']
+  ],
+};
+
+const formats = [
+  'header',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link'
+];
 
 function ScriptEventForm({ event, onSave, onCancel, project }) {
   const { isDarkMode } = useTheme();
@@ -78,25 +96,16 @@ function ScriptEventForm({ event, onSave, onCancel, project }) {
 
       <div>
         <label className="block mb-2">{t('event.description')}</label>
-        <Editor
-          apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-          init={{
-            height: 300,
-            menubar: true,
-            plugins: [
-              'advlist autolink lists link image charmap print preview anchor',
-              'searchreplace visualblocks code fullscreen',
-              'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | \
-              alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | help',
-            skin: isDarkMode ? 'oxide-dark' : 'oxide',
-            content_css: isDarkMode ? 'dark' : 'default'
-          }}
-          value={formData.description}
-          onEditorChange={(content) => setFormData(prev => ({ ...prev, description: content }))}
-        />
+        <div className={isDarkMode ? 'dark-theme-editor' : ''}>
+          <ReactQuill
+            theme="snow"
+            value={formData.description}
+            onChange={(content) => setFormData(prev => ({ ...prev, description: content }))}
+            modules={modules}
+            formats={formats}
+            className={`bg-${isDarkMode ? 'gray-800' : 'white'} rounded`}
+          />
+        </div>
       </div>
 
       <div>
