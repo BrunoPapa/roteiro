@@ -33,11 +33,11 @@ function NavigationBar() {
     <nav
       className={`px-4 py-3 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-md flex items-center justify-between`}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 relative z-50">
         {isProjectPage && (
           <Button
             variant="ghost"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-opacity-90 backdrop-blur-sm"
             onClick={() => navigate('/')}
           >
             <ChevronLeft className="h-4 w-4" />

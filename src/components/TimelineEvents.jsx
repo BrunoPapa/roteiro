@@ -145,8 +145,8 @@ function TimelineEvents({ timeline, onBack }) {
       </div>
 
       {showEventForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
+        <div className="fixed inset-0 z-50 bg-opacity-100">
+          <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} w-full h-full p-6 overflow-y-auto`}>
             <EventForm
               event={editEvent}
               time={selectedTime}

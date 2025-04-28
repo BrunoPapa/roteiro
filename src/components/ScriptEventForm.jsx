@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
+import { Editor } from '@tinymce/tinymce-react';
 
 function ScriptEventForm({ event, onSave, onCancel, project }) {
   const { isDarkMode } = useTheme();
@@ -78,11 +79,22 @@ function ScriptEventForm({ event, onSave, onCancel, project }) {
 
       <div>
         <label className="block mb-2">{t('event.description')}</label>
-        <textarea
+        <Editor
+          apiKey="your-tinymce-api-key"
+          init={{
+            height: 300,
+            menubar: true,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic backcolor | \
+              alignleft aligncenter alignright alignjustify | \
+              bullist numlist outdent indent | removeformat | help'
+          }}
           value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          rows="3"
-          className={inputClassName}
+          onEditorChange={(content) => setFormData(prev => ({ ...prev, description: content }))}
         />
       </div>
 

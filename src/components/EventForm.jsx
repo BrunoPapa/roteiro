@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useProjects } from '../context/ProjectContext';
 import { useParams } from 'react-router-dom';
+import { Editor } from '@tinymce/tinymce-react';
 
 const relationshipTypes = ['Sequencial', 'Direto', 'Indireto', 'Oculto'];
 const characterActions = ['No Evento', 'Citado'];
@@ -111,13 +112,22 @@ function EventForm({ event, time, onSave, onCancel, existingEvents }) {
 
       <div>
         <label className="block mb-2">Roteiro *</label>
-        <textarea
-          name="script"
-          required
+        <Editor
+          apiKey="your-tinymce-api-key"
+          init={{
+            height: 300,
+            menubar: true,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic backcolor | \
+              alignleft aligncenter alignright alignjustify | \
+              bullist numlist outdent indent | removeformat | help'
+          }}
           value={formData.script}
-          onChange={handleChange}
-          rows="4"
-          className={inputClassName}
+          onEditorChange={(content) => setFormData(prev => ({ ...prev, script: content }))}
         />
       </div>
 
