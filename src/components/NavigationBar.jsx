@@ -49,7 +49,7 @@ function NavigationBar() {
                 medium: 16,
                 large: 18
               }[size])}
-              className="px-3 py-1"
+              className={`px-3 py-1 ${isDarkMode ? 'text-white' : ''}`}
               style={{ fontSize: `${size === 'small' ? 14 : size === 'medium' ? 16 : 18}px` }}
             >
               A
@@ -64,7 +64,7 @@ function NavigationBar() {
         {isProjectPage && (
           <Button
             variant="ghost"
-            className="flex items-center gap-2"
+            className={`flex items-center gap-2 ${isDarkMode ? 'text-white' : ''}`}
             onClick={() => navigate('/')}
           >
             <ChevronLeft className="h-4 w-4" />
@@ -76,6 +76,7 @@ function NavigationBar() {
         <Button
           variant="ghost"
           size="icon"
+          className={isDarkMode ? 'text-white' : ''}
           onClick={toggleTheme}
           title={t(`common.darkMode.${isDarkMode ? 'light' : 'dark'}`)}
         >
