@@ -28,7 +28,6 @@ function ScriptEventForm({ event, onSave, onCancel, project }) {
     onSave(formData);
   };
 
-  // Get events from selected timeline
   const getTimelineEvents = () => {
     const timeline = timelineOptions.find(t => t.id === selectedTimeline);
     return timeline?.events || [];
@@ -80,7 +79,7 @@ function ScriptEventForm({ event, onSave, onCancel, project }) {
       <div>
         <label className="block mb-2">{t('event.description')}</label>
         <Editor
-          apiKey="your-tinymce-api-key"
+          apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
           init={{
             height: 300,
             menubar: true,
@@ -91,7 +90,9 @@ function ScriptEventForm({ event, onSave, onCancel, project }) {
             ],
             toolbar: 'undo redo | formatselect | bold italic backcolor | \
               alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | help'
+              bullist numlist outdent indent | removeformat | help',
+            skin: isDarkMode ? 'oxide-dark' : 'oxide',
+            content_css: isDarkMode ? 'dark' : 'default'
           }}
           value={formData.description}
           onEditorChange={(content) => setFormData(prev => ({ ...prev, description: content }))}

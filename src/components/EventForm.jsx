@@ -113,7 +113,7 @@ function EventForm({ event, time, onSave, onCancel, existingEvents }) {
       <div>
         <label className="block mb-2">Roteiro *</label>
         <Editor
-          apiKey="your-tinymce-api-key"
+          apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
           init={{
             height: 300,
             menubar: true,
@@ -124,7 +124,9 @@ function EventForm({ event, time, onSave, onCancel, existingEvents }) {
             ],
             toolbar: 'undo redo | formatselect | bold italic backcolor | \
               alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | help'
+              bullist numlist outdent indent | removeformat | help',
+            skin: isDarkMode ? 'oxide-dark' : 'oxide',
+            content_css: isDarkMode ? 'dark' : 'default'
           }}
           value={formData.script}
           onEditorChange={(content) => setFormData(prev => ({ ...prev, script: content }))}
