@@ -140,29 +140,25 @@ function ProjectManagement() {
   const renderContent = () => {
     if (selectedTimeline) {
       return (
-        <div className={`${isSidebarExpanded ? 'ml-64' : 'ml-16'} transition-all`}>
-          <TimelineEvents
-            timeline={selectedTimeline}
-            onBack={() => setSelectedTimeline(null)}
-            onUpdate={handleUpdateTimeline}
-          />
-        </div>
+        <TimelineEvents
+          timeline={selectedTimeline}
+          onBack={() => setSelectedTimeline(null)}
+          onUpdate={handleUpdateTimeline}
+        />
       );
     }
 
     if (selectedScript) {
       return (
-        <div className={`${isSidebarExpanded ? 'ml-64' : 'ml-16'} transition-all`}>
-          <ScriptWriting
-            script={selectedScript}
-            project={project}
-            onBack={() => setSelectedScript(null)}
-            onUpdate={handleUpdateScript}
-          />
-        </div>
+        <ScriptWriting
+          script={selectedScript}
+          project={project}
+          onBack={() => setSelectedScript(null)}
+          onUpdate={handleUpdateScript}
+        />
       );
     }
-
+    
     if (activeSection === 'dashboard') {
       return <Dashboard project={project} />;
     }
@@ -236,7 +232,7 @@ function ProjectManagement() {
          style={{ fontSize: `${fontSize}px` }}>
 
       {/* Sidebar */}
-      <div className={`fixed left-0 top-0 h-full ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'} transition-all ${isSidebarExpanded ? 'w-64' : 'w-16'}`}>
+      <div className={`fixed left-0 top-0 h-full ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'} transition-all duration-300 ${isSidebarExpanded ? 'w-64' : 'w-16'} z-50`}>
         <button
           onClick={() => setSidebarExpanded(!isSidebarExpanded)}
           className="absolute -right-3 top-2 bg-blue-600 rounded-full p-1"
@@ -270,7 +266,9 @@ function ProjectManagement() {
       </div>
 
       {/* Main Content */}
-      {renderContent()}
+      <div className={`${isSidebarExpanded ? 'pl-64' : 'pl-16'} transition-all duration-300`}>
+        {renderContent()}
+      </div>
 
       <DeleteConfirmation
         isOpen={deleteModal.show}
