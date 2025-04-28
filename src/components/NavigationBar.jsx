@@ -33,17 +33,8 @@ function NavigationBar() {
     <nav
       className={`px-4 py-3 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-md flex items-center justify-between`}
     >
-      <div className="flex items-center gap-4 relative z-50">
-        {isProjectPage && (
-          <Button
-            variant="ghost"
-            className="flex items-center gap-2 bg-opacity-90 backdrop-blur-sm"
-            onClick={() => navigate('/')}
-          >
-            <ChevronLeft className="h-4 w-4" />
-            {t('common.backToProjects')}
-          </Button>
-        )}
+      <div>
+        {/* Left side empty for consistent spacing */}
       </div>
 
       <div className="flex items-center gap-4">
@@ -68,6 +59,18 @@ function NavigationBar() {
 
         {/* Language Switcher */}
         <LanguageSwitcher />
+
+        {/* Back to Projects */}
+        {isProjectPage && (
+          <Button
+            variant="ghost"
+            className="flex items-center gap-2"
+            onClick={() => navigate('/')}
+          >
+            <ChevronLeft className="h-4 w-4" />
+            {t('common.backToProjects')}
+          </Button>
+        )}
 
         {/* Theme Toggle */}
         <Button
