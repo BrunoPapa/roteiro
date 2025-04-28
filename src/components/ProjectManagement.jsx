@@ -140,22 +140,26 @@ function ProjectManagement() {
   const renderContent = () => {
     if (selectedTimeline) {
       return (
-        <TimelineEvents
-          timeline={selectedTimeline}
-          onClose={() => setSelectedTimeline(null)}
-          onUpdate={handleUpdateTimeline}
-        />
+        <div className={`${isSidebarExpanded ? 'ml-64' : 'ml-16'} transition-all`}>
+          <TimelineEvents
+            timeline={selectedTimeline}
+            onBack={() => setSelectedTimeline(null)}
+            onUpdate={handleUpdateTimeline}
+          />
+        </div>
       );
     }
 
     if (selectedScript) {
       return (
-        <ScriptWriting
-          script={selectedScript}
-          project={project}
-          onBack={() => setSelectedScript(null)}
-          onUpdate={handleUpdateScript}
-        />
+        <div className={`${isSidebarExpanded ? 'ml-64' : 'ml-16'} transition-all`}>
+          <ScriptWriting
+            script={selectedScript}
+            project={project}
+            onBack={() => setSelectedScript(null)}
+            onUpdate={handleUpdateScript}
+          />
+        </div>
       );
     }
 
@@ -266,9 +270,7 @@ function ProjectManagement() {
       </div>
 
       {/* Main Content */}
-      <div className={`${isSidebarExpanded ? 'ml-64' : 'ml-16'} transition-all`}>
-        {renderContent()}
-      </div>
+      {renderContent()}
 
       <DeleteConfirmation
         isOpen={deleteModal.show}
